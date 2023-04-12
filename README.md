@@ -87,7 +87,7 @@ Saída
 
 ## Comentários sobre o projeto
 
-- Princpais imports necessários:
+- Principais imports necessários:
 
 ```python
 import time
