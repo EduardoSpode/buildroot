@@ -18,15 +18,11 @@ class MyHandler(BaseHTTPRequestHandler):
         
         datahora = os.popen('date').read()
         systime = os.popen("awk '{print $1}' /proc/uptime").read()
-        #cpuModel = os.popen("lscpu | grep 'Model name'").read()
-        #cpuCores = os.popen("lscpu | grep 'CPU(s):' | head -n1").read()
         cpuModel = os.popen("cat /proc/cpuinfo | grep 'model name'").read()
         cpuCores = os.popen("cat /proc/cpuinfo | grep 'cpu MHz'").read()
-        #memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
-        #memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
         memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
         memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
-         sysVersion = os.popen("uname -a | cut -d ' ' -f3)".read()
+        sysVersion = os.popen("uname -a | cut -d ' ' -f3").read()
         listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $3 \"<br>\"}'").read()
 
         cpu = cpustat.GetCpuLoad()

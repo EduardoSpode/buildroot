@@ -40,7 +40,11 @@ Incluímos no nosso projeto algumas configurações em ```make menuconfig```:
 Realize o make
 
 # Target
-```!!!! FALTA INSERIRINSERIR O COMANDO DE INICIALIZAÇÃO```
+Para rodar emulador do target utilize
+
+```
+sudo qemu-system-i386 --device e1000,netdev=eth0,mac=aa:bb:cc:dd:ee:ff --netdev tap,id=eth0,script=custom-scripts/qemu-ifup --kernel output/images/bzImage --hda output/images/rootfs.ext2 --nographic --append "console=ttyS0 root=/dev/sda"  
+```
 
 Crie uma pasta no _TARGET_ para guardar os arquivos necessários para o HTTP Server em python.
 
@@ -73,13 +77,13 @@ Com o servidor HTTP rodando no TARGET, use o shell do HOST e execute o comando:
 
 `` links -anonymous http://<IP-DO-TARGET>:<PORTA-TARGET> ``
 
-ex:
+## Exemplo
 
 `` links -anonymous http://192.168.1.10:8000 ``
 
 Saída
-``!!!!!!! inserir imagem``
-[Image]()
+
+![Saida](httpServer/Saida.png)
 
 <br/><br/><br/>
 ## Comentários sobre o projeto
@@ -127,41 +131,3 @@ A partir disso, salvamos os vários comandos em variaveis e montamos o HTML.
 
 _**A cada novo request, os metodos são chamados e atulizados em tempo real os dados do servidor**_
 
-## Forwading
-<br/>
-<br/>
-<br/>
-<br/>
-
-## EXECUÇÃO:
-
-A inicialização pode ser feita com o seguinte comando.
-
-
-# Buildroot original readme
-Buildroot is a simple, efficient and easy-to-use tool to generate embedded
-Linux systems through cross-compilation.
-
-The documentation can be found in docs/manual. You can generate a text
-document with 'make manual-text' and read output/docs/manual/manual.text.
-Online documentation can be found at http://buildroot.org/docs.html
-
-To build and use the buildroot stuff, do the following:
-
-1) run 'make menuconfig'
-2) select the target architecture and the packages you wish to compile
-3) run 'make'
-4) wait while it compiles
-5) find the kernel, bootloader, root filesystem, etc. in output/images
-
-You do not need to be root to build or run buildroot.  Have fun!
-
-Buildroot comes with a basic configuration for a number of boards. Run
-'make list-defconfigs' to view the list of provided configurations.
-
-Please feed suggestions, bug reports, insults, and bribes back to the
-buildroot mailing list: buildroot@buildroot.org
-You can also find us on # buildroot on OFTC IRC.
-
-If you would like to contribute patches, please read
-https://buildroot.org/manual.html# submitting-patches
