@@ -104,7 +104,7 @@ Principais comandos para obter informações no servidor:
         systime = os.popen("awk '{print $1}' /proc/uptime").read()  #imprime o tempo de atividade
         cpuModel = os.popen("cat /proc/cpuinfo | grep 'model name'").read() #informações modelo de CPU
         cpuCores = os.popen("cat /proc/cpuinfo | grep 'cpu MHz'").read() # velocidade da CPU buscando filtro de CPU MHz
-        memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read() #Free exibe todos os dados de memória e awk a
+        memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
         memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
         sysVersion = os.popen("uname -a | cut -d ' ' -f3)".read() #uname exibe informções do kernel e o cut 'corta' em colunas
         ()
@@ -113,7 +113,7 @@ Principais comandos para obter informações no servidor:
         cpu = cpustat.GetCpuLoad()
 ```
 
-A principal biblioteca os possui um metodo muito util, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
+A principal biblioteca ***os*** possui um metodo muito util, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
 ```os.popen('date').read()``` retorna a hora no servidor com o comando ```date``` no shell.
 A partir disso, utilizamos vários comandos nativos shell  para pre-processamento de dados como:
 
