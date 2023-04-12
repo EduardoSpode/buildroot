@@ -8,7 +8,9 @@ Além disso, todo o desenvolvimento deve ser adicionado ao repositório de fonte
 [Definições do trabalho](./httpServer/tp1.pdf)
 
 ## PROJETO
-Para execução do projeto, assumimos que você já tenha concluído algumas etapas anteriores que exigem:
+### PRÉ REQUISITOS:
+
+Para execução do projeto, assumimos que você já tenha concluído algumas etapas anteriores (tutoriais) que exigem:
 
 * Habilitado um Driver de Ethernet
 * Configurado o script de inicialização da interface de rede -> [Pasta de script](./custom-scripts/) 
@@ -16,31 +18,110 @@ Para execução do projeto, assumimos que você já tenha concluído algumas eta
 
 ## Etapas adicionais no nosso projeto
 Incluímos no nosso projeto algumas configurações em ```make menuconfig```:
-- passos para habilir a libc
-- passos para habilitar o wchar
-- passos para habiltiar o python
 
-Criamos uma pasta no repositório par  guardar os arquivos desenvolvidos para o HTTP Server em python.
-
-````mkdir httpServer````
-
-E criamos um arquivo dentro da parta um arquivo [httpServer.py](./httpServer/httpServer.py). O arcabouço do código foi utilizado a partir do disponibilizado em aula
-
-Utilizamos o código auxiliar [cpustat.py](./httpServer/cpustat.py) e o importamos no código. Principais importações
-
+- Habilitar o uClibc-ng:
+``` 
+    --> Toolchain
+        --->C libary 
+            ---->(*) uClibc-ng
 ```
+- Habilitar o W CHAR:
+```
+
+    --> Toolchain
+        --->[*] Enable WCHAR support
+```
+- Habilitar o Python
+```
+    -->Target Pakets
+        --->Interpreter languages and scripting
+            ---> [*] python3
+```
+Realize o make
+
+# Target
+```!!!! FALTA INSERIRINSERIR O COMANDO DE INICIALIZAÇÃO```
+
+Crie uma pasta no _TARGET_ para guardar os arquivos necessários para o HTTP Server em python.
+
+``mkdir webserverfiles``
+
+Acessando a pasta: 
+
+``cd httpServer``
+
+E crie um arquivo dentro da pasta:
+
+``vi httpServer.py``.
+
+Insira o código de repositório  [httpServer.py](./httpServer/httpServer.py). 
+
+
+É necessário o código auxiliar [cpustat.py](./httpServer/cpustat.py); Crie na mesma pasta:
+
+``vi cpustat.py``
+
+Insira o código disponibilizado em [cpustat.py](./httpServer/cpustat.py)
+
+Para executar o servidor HTTP, rode o comando
+
+``python /root/webserverfiles/httpServer.py``
+
+# HOST
+
+Com o servidor HTTP rodando no TARGET, use o shell do HOST e execute o comando:
+
+`` links -anonymous http://<IP-DO-TARGET>:<PORTA-TARGET> ``
+
+ex:
+
+`` links -anonymous http://192.168.1.10:8000 ``
+
+Saída
+``!!!!!!! inserir imagem``
+[Image]()
+
+<br/><br/><br/>
+## Comentários sobre o projeto
+
+- Princpais imports necessários:
+
+```python
 import time
 from http.server import BaseHTTPRequestHandler,HTTPServer
-import os
-import cpustat as cpustat
+import os #PERMITE CHAMADAS DE SISTEMA
+import cpustat as cpustat #IMPORTA O ARQUIVO PARA VERIFICAR CPU
 ```
+
+Principais comandos para obter informações no servidor:
+
+```python
+        datahora = os.popen('date').read() #Verifica hora no servidor
+        systime = os.popen("awk '{print $1}' /proc/uptime").read()  #imprime o tempo de atividade
+        cpuModel = os.popen("cat /proc/cpuinfo | grep 'model name'").read() #informações modelo de CPU
+        cpuCores = os.popen("cat /proc/cpuinfo | grep 'cpu MHz'").read() # velocidade da CPU buscando filtro de CPU MHz
+        memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read() #Free exibe todos os dados de memória e awk a
+        memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
+        sysVersion = os.popen("uname -a | cut -d ' ' -f3)".read() #uname exibe informções do kernel e o cut 'corta' em colunas
+        ()
+        listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $3 \"<br>\"}'").read()
+
+        cpu = cpustat.GetCpuLoad()
+```
+
 A principal biblioteca os possui um metodo muito util, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
 ```os.popen('date').read()``` retorna a hora no servidor com o comando ```date``` no shell.
 A partir disso, utilizamos vários comandos nativos shell  para pre-processamento de dados como:
-- cat
-- grep
-- awk
-- | (pipe)
+
+```bash
+
+cat  #exibe informação de um arquivo
+grep #fitra palavras em arquivos ou em stdin
+awk # processa e exibe colunas
+cut # semelhante ao awk
+| #pipe  permite 'ligar' comandos
+
+```
 
 A partir disso, salvamos os vários comandos em variaveis e montamos o HTML. 
 
