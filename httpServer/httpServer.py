@@ -26,8 +26,7 @@ class MyHandler(BaseHTTPRequestHandler):
         #memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
         memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
         memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
-        sysVersion = os.popen("cat /etc/*release* | grep 'DISTRIB_DESCRIPTION'| awk -F '=' '{print $2}'").read()
-        #listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $11 \"<br>\"}'").read()
+         sysVersion = os.popen("uname -a | cut -d ' ' -f3)".read()
         listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $3 \"<br>\"}'").read()
 
         cpu = cpustat.GetCpuLoad()
