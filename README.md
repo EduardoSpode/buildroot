@@ -113,7 +113,7 @@ Principais comandos para obter informações no servidor:
         cpu = cpustat.GetCpuLoad()
 ```
 
-A principal biblioteca ***os*** possui um metodo muito util, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
+A principal biblioteca ***os*** possui um metodo muito útil, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
 ```os.popen('date').read()``` retorna a hora no servidor com o comando ```date``` no shell.
 A partir disso, utilizamos vários comandos nativos shell  para pre-processamento de dados como:
 
