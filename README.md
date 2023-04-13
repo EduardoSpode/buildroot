@@ -52,7 +52,7 @@ Crie uma pasta no _TARGET_ para guardar os arquivos necessários para o HTTP Ser
 
 Acessando a pasta: 
 
-``cd httpServer``
+``cd webserverfiles``
 
 E crie um arquivo dentro da pasta:
 
@@ -76,6 +76,8 @@ Para executar o servidor HTTP, rode o comando
 Com o servidor HTTP rodando no TARGET, use o shell do HOST e execute o comando:
 
 `` links -anonymous http://<IP-DO-TARGET>:<PORTA-TARGET> ``
+
+Use -anonymous para evitar o uso de cache do links
 
 ## Exemplo
 
@@ -103,13 +105,12 @@ Principais comandos para obter informações no servidor:
         systime = os.popen("awk '{print $1}' /proc/uptime").read()  #imprime o tempo de atividade
         cpuModel = os.popen("cat /proc/cpuinfo | grep 'model name'").read() #informações modelo de CPU
         cpuCores = os.popen("cat /proc/cpuinfo | grep 'cpu MHz'").read() # velocidade da CPU buscando filtro de CPU MHz
-        memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read()
-        memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()
+        memRamUsada = os.popen("free -m | grep 'Mem' | awk '{print $3}'").read() #exibe diversas infomações da memoria e processa a coluna de 'Used'
+        memRamTotal =  os.popen("free -m | grep 'Mem' | awk '{print $2}'").read()#exibe diversas infomações da memoria e processa a coluna de 'Total'
         sysVersion = os.popen("uname -a | cut -d ' ' -f3)".read() #uname exibe informções do kernel e o cut 'corta' em colunas
-        ()
-        listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $3 \"<br>\"}'").read()
+        listProc = os.popen("ps aux | awk '{print $1 \" = \" $2 \" = \" $3 \"<br>\"}'").read() # lista todos os processos de todos os usuários. Note: o <br> não é nativo. Utilizamos para formatação HTML.
 
-        cpu = cpustat.GetCpuLoad()
+        cpu = cpustat.GetCpuLoad() #Exibe o load/ uso em porcentagem de cada cpu.
 ```
 
 A principal biblioteca ***os*** possui um metodo muito útil, o **os.popen** que permite executar comandos no shell e obter seu output. Por exemplo:
