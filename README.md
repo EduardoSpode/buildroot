@@ -1,4 +1,6 @@
-# Tutorial - HttpLocalInfoServer e Forwarding
+# Eduardo Spode Cardoso & Gilberto Luis Koerbes Junior
+
+# Tutorial - HttpSystemInfoServer
 ### Definições do trabalho:
 
 Os alunos podem realizar esta atividade em duplas ou individualmente. 
@@ -58,7 +60,7 @@ E crie um arquivo dentro da pasta:
 
 ``vi httpServer.py``.
 
-Insira o código de repositório  [httpServer.py](./httpServer/httpServer.py). 
+Insira o código do repositório  [httpServer.py](./httpServer/httpServer.py). 
 
 
 É necessário o código auxiliar [cpustat.py](./httpServer/cpustat.py); Crie na mesma pasta:
