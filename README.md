@@ -29,7 +29,6 @@ Incluímos no nosso projeto algumas configurações em ```make menuconfig```:
 ```
 - Habilitar o W CHAR:
 ```
-
     --> Toolchain
         --->[*] Enable WCHAR support
 ```
