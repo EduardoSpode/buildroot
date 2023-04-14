@@ -40,7 +40,13 @@ Incluímos no nosso projeto algumas configurações em ```make menuconfig```:
             ---> [*] python3
 ```
 
-Realize o make clean e depois o make MAKEINFO=false
+Realize o comando:
+
+```make clean```
+
+E depois o comando:
+
+```make MAKEINFO=false```
 
 # Target
 Para rodar emulador do target utilize
