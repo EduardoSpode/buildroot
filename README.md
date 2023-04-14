@@ -39,7 +39,8 @@ Incluímos no nosso projeto algumas configurações em ```make menuconfig```:
         --->Interpreter languages and scripting
             ---> [*] python3
 ```
-Realize o make
+
+Realize o make clean e depois o make MAKEINFO=false
 
 # Target
 Para rodar emulador do target utilize
