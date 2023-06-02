@@ -1,1 +1,1 @@
-cmd_/workspaces/buildroot/modules/hello/khello.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /workspaces/buildroot/modules/hello/khello.ko /workspaces/buildroot/modules/hello/khello.o /workspaces/buildroot/modules/hello/khello.mod.o ;  true
+cmd_/workspace/buildroot/modules/hello/khello.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /workspace/buildroot/modules/hello/khello.ko /workspace/buildroot/modules/hello/khello.o /workspace/buildroot/modules/hello/khello.mod.o ;  true

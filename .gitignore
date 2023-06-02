@@ -13,4 +13,5 @@
 *~
 *.pyc
 sdb.bin
+sdc.bin
 outputmake.txt

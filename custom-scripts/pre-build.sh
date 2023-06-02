@@ -5,3 +5,4 @@ chmod +x $BASE_DIR/target/etc/init.d/S41network-config
 make -C $BASE_DIR/../modules/simple_driver/
 make -C $BASE_DIR/../modules/hello/
 make -C $BASE_DIR/../disk-test/
+make -C $BASE_DIR/../modules/sstf-iosched/
