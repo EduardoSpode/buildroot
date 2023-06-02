@@ -1,7 +1,7 @@
 obj-m := test.o
-BUILDROOT_DIR := /workspaces/buildroot
+BUILDROOT_DIR := /workspace*/buildroot
 COMPILER := $(BUILDROOT_DIR)/output/host/bin/i686-buildroot-linux-gnu-gcc
 
 all:
 	$(COMPILER) -o test test.c
-	cp test $(BUILDROOT_DIR)/output/target/  bin
+	cp test $(BUILDROOT_DIR)/output/target/bin
