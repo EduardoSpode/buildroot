@@ -10,6 +10,7 @@ Além disso, todo o desenvolvimento deve ser adicionado ao repositório de fonte
 ## PROJETO
 ### PRÉ REQUISITOS:
 
+
 Para execução do projeto, assumimos que você já tenha concluído algumas etapas anteriores (tutoriais) que exigem:
 
 * Habilitado um Driver de Ethernet
@@ -131,3 +132,5 @@ A partir disso, salvamos os vários comandos em variaveis e montamos o HTML.
 
 _**A cada novo request, os metodos são chamados e atulizados em tempo real os dados do servidor**_
 
+
+# novo comentario

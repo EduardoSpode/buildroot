@@ -8,6 +8,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
+
 
 #define BUFFER_LENGTH 512
 #define DISK_SZ 1073741824
@@ -18,6 +20,10 @@ int main()
 	int ret, fd, pid, i;
 	unsigned int pos;
 	char buf[BUFFER_LENGTH];
+	clock_t start, end;
+    double cpu_time_used;
+
+	start = clock();	
 
 	printf("Starting sector read example...\n");
 
@@ -41,7 +47,7 @@ int main()
 		return errno;
 	}
 
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < 100; i++) {
 		pos = (rand() % (DISK_SZ >> 9));
 		/* Set position */
 		lseek(fd, pos * 512, SEEK_SET);
@@ -49,6 +55,12 @@ int main()
 		read(fd, buf, 100);
 	}
 	close(fd);
+
+	end = clock(); // Stop the timer
+
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC; // Calculate the execution time
+
+    //printf("Execution Time: %f seconds\n", cpu_time_used);
 
 	return 0;
 }

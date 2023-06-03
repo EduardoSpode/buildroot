@@ -11,7 +11,7 @@
 #include <linux/slab.h>
 #include <linux/init.h>
 
-long long unsigned lastSector = 0;
+long long unsigned lastSector_read = 0;
 
 /* SSTF data structure. */
 struct sstf_data {
@@ -24,41 +24,34 @@ static void sstf_merged_requests(struct request_queue *q, struct request *rq,
 	list_del_init(&next->queuelist);
 }
 
-/* Esta função despacha o próximo bloco a ser lido. */
-static int sstf_dispatch(struct request_queue *q, int force){
+static int sstf_dispatch(struct request_queue *q, int var){
 	struct sstf_data *nd = q->elevator->elevator_data;
-	char direction = 'R';
-	struct request *rq;
-	struct request *listRq;
-	struct request *shortRq;
-	struct list_head *p;
-	/* Aqui deve-se retirar uma requisição da fila e enviá-la para processamento.
-	 * Use como exemplo o driver noop-iosched.c. Veja como a requisição é tratada.
-	 *
-	 * Antes de retornar da função, imprima o sector que foi atendido.
-	 */
+	struct list_head *i;
+	struct request *req;
+	struct request *shortReq;
 	
-	shortRq = list_first_entry_or_null(&nd->queue, struct request, queuelist);
+	//Pega o primeiro elemento da lista
+	shortReq = list_first_entry_or_null(&nd->queue, struct request, queuelist);
 
-	list_for_each(p, &nd->queue) {
-				listRq = list_entry(p, struct request, queuelist);
+	//Percorre toda a lista
+	list_for_each(i, &nd->queue) {
+				//Pega a requesicao
+				req = list_entry(i, struct request, queuelist);
 
-				if(abs(blk_rq_pos(listRq)-lastSector) <  abs(blk_rq_pos(shortRq)-lastSector)){
-					//printk(KERN_EMERG "Shorter -> %llu < %llu \n", blk_rq_pos(listRq), lastSector);
-					shortRq = listRq;
+				int listReqDiff = abs(blk_rq_pos(req)-lastSector_read);
+				int shortReqDiff = abs(blk_rq_pos(shortReq)-lastSector_read);
+				if(listReqDiff <  shortReqDiff) {
+
+					shortReq = req;
+
 				}
-				// if(blk_rq_pos(rq) < blk_rq_pos(listRq)){
-				// 	list_add_tail(&rq->queuelist,p);
-				// }
-
 	}
 
-	rq = shortRq;
-	if (rq) {
-		lastSector = blk_rq_pos(rq);
-		list_del_init(&rq->queuelist);
-		elv_dispatch_sort(q, rq);
-		printk(KERN_EMERG "[SSTF] dsp %c %llu\n", direction, blk_rq_pos(rq));
+	if (shortReq) {
+		lastSector_read = blk_rq_pos(shortReq);
+		list_del_init(&shortReq->queuelist);
+		// printk(KERN_EMERG "[SSTF] dsp %llu\n", blk_rq_pos(shortReq));
+		elv_dispatch_sort(q, shortReq);
 
 		return 1;
 	}
@@ -67,24 +60,11 @@ static int sstf_dispatch(struct request_queue *q, int force){
 
 static void sstf_add_request(struct request_queue *q, struct request *rq){
 	struct sstf_data *nd = q->elevator->elevator_data;
+
 	char direction = 'R';
 
-	struct list_head *p;
-	struct request *listRq;
-	struct request *listRqNext;
-	bool notFound = false;
-	//unsigned long long rqBlock = blk_rq_pos(rq);
-
-
-
-	/* Aqui deve-se adicionar uma requisição na fila do driver.
-	 * Use como exemplo o driver noop-iosched.c
-	 *
-	 * Antes de retornar da função, imprima o sector que foi adicionado na lista.
-	 */
-	
 	list_add_tail(&rq->queuelist, &nd->queue);
-	printk(KERN_EMERG "[SSTF] add %c %llu\n", direction, blk_rq_pos(rq));
+	// printk(KERN_EMERG "[SSTF] add %c %llu\n", direction, blk_rq_pos(rq));
 }
 
 static int sstf_init_queue(struct request_queue *q, struct elevator_type *e){
