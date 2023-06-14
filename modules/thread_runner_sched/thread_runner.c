@@ -9,15 +9,19 @@
 char *buffer = NULL;
 int  pointer =0;
 
+//Semaforo
+pthread_mutex_t semaforo;
 
 void *run(void *data)
 {
 	int id = (int) data;
 	char letter = 0x41 + id;
-	printf("Inicia thread %d %c \n", id, letter;
+	printf("Inicia thread %d %c \n", id, letter);
+
+	pthread_mutex_lock(&semaforo);
 	buffer[pointer] = letter;
 	pointer++;
-
+	pthread_mutex_unlock(&semaforo);
 	return 0;
 }
 
@@ -76,11 +80,16 @@ int setpriority(pthread_t *thr, int newpolicy, int newpriority)
 	printf("new: ");
 	print_sched(policy);
 
+
+	free(buffer);
 	return 0;
 }
 
 int main(int argc, char **argv)
 {
+
+	pthread_mutex_init(&semaforo, NULL);
+
 	int N_THREADS = 0;
 	int BUFFER_SIZE = 0;
 	int POLICY_TYPE = 0;
@@ -104,8 +113,19 @@ int main(int argc, char **argv)
 
 	printf("Inicio: %d %d %d %d\n", N_THREADS, BUFFER_SIZE, POLICY_TYPE, POLICY_PRIORITY);
 
+	int prio;
+
+	if(strcmp(argv[3],"SCHED_FIFO")==0) prio = SCHED_FIFO;
+	else if(strcmp(argv[3],"SCHED_RR")==0) prio = SCHED_RR;
+	else if(strcmp(argv[3],"SCHED_DEADLINE")==0) prio = SCHED_DEADLINE;
+	else if(strcmp(argv[3],"SCHED_OTHER")==0) prio = SCHED_OTHER;
+	else if(strcmp(argv[3],"SCHED_BATCH")==0) prio = SCHED_BATCH;
+	else if(strcmp(argv[3],"SCHED_IDLE")==0) prio = SCHED_IDLE;
+
 	for(int i = 0; i < N_THREADS; i++) {
-			pthread_create(&thr[i], NULL, run, (void*)i));
+			pthread_create(&thr[i], NULL, run, (void*)i);
+			setpriority(&thr, prio, 1);
+
 	}
 
 	for(int i = 0; i < N_THREADS; i++) {
@@ -118,9 +138,8 @@ int main(int argc, char **argv)
 	}
 
 	printf("Fim\n");
-	// setpriority(&thr, SCHED_FIFO, 1);
 
-
-	free(buffer)
+	pthread_mutex_destroy(&semaforo);
+	free(buffer);
 	return 0;
 }

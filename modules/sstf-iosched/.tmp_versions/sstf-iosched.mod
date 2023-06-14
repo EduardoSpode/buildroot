@@ -1,3 +1,3 @@
-/workspace/buildroot/modules/sstf-iosched/sstf-iosched.ko
-/workspace/buildroot/modules/sstf-iosched/sstf-iosched.o
+/workspaces/buildroot/modules/sstf-iosched/sstf-iosched.ko
+/workspaces/buildroot/modules/sstf-iosched/sstf-iosched.o
 

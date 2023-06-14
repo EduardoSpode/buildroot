@@ -1,3 +1,3 @@
-/workspace/buildroot/modules/hello/khello.ko
-/workspace/buildroot/modules/hello/khello.o
+/workspaces/buildroot/modules/hello/khello.ko
+/workspaces/buildroot/modules/hello/khello.o
 
