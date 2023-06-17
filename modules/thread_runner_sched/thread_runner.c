@@ -143,9 +143,9 @@ int main(int argc, char **argv)
 	pthread_mutex_destroy(&semaforo);
 
 	//Mostra a sequencia
-	for(int i = 0; i < buffer_size; i++){
-		printf("%c", buffer[i]);
-	}
+	// for(int i = 0; i < buffer_size; i++){
+	// 	printf("%c", buffer[i]);
+	// }
 
 
 	int* thread_rep_counter = (int*) malloc(N_THREADS * sizeof(int));
@@ -155,12 +155,10 @@ int main(int argc, char **argv)
 	for(int i = 0; i < buffer_size; i++){
 		int index = (int)buffer[i]-0x41;
 		if(i==0){
-			printf("%c", buffer[i]);
 			thread_rep_counter[index] = thread_rep_counter[index] + 1;
 		} 
 
 		if(i > 0 && buffer[i] != buffer[i-1]){
-			printf("%c", buffer[i]);
 			thread_rep_counter[index] = thread_rep_counter[index] + 1;
 		}
 	}
